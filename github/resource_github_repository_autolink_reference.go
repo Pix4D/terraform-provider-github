@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -44,6 +45,9 @@ func resourceGithubRepositoryAutolinkReference() *schema.Resource {
 						return nil, err
 					}
 
+					if autolink.ID == nil {
+						return nil, errors.New("Autolink doesn't exist")
+					}
 					id = strconv.FormatInt(*autolink.ID, 10)
 				}
 
